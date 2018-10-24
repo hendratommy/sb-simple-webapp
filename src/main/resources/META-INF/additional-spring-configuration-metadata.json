@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "sb.simplewebapp.api.security.default_realm",
+    "type": "java.lang.String",
+    "description": "Basic Authentication Realm for API Endpoints, if none specified DEFAULT_REALM will be used instead"
+  },
+  {
+    "name": "sb.simplewebapp.storage.public.path",
+    "type": "java.lang.String",
+    "description": "Directory path for containing public uploaded files"
+  },
+  {
+    "name": "sb.simplewebapp.storage.private.path",
+    "type": "java.lang.String",
+    "description": "Directory path for containing private uploaded files"
+  }
+]}

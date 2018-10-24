@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="author" content="Hendra Tommy Wijaya">
+<meta name="company" content="SA">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="System and Application Authorization Server">
+<title>Private Files</title>
+<link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/images/favicon.ico}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/vendor/semantic/semantic.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/main/styles.css}">
+
+<style type="text/css">
+	.grid {
+		height: 100%;
+    }
+    #root {
+    	margin: 2em;
+    }
+</style>
+</head>
+<body>
+	<noscript>You need to enable JavaScript to run this app.</noscript>
+	<div id="root">
+		<div class="ui aligned grid fluid container">
+			<div class="column">
+				<div class="ui segment">
+					<h2 class="ui center aligned header">
+						<img class="image" alt="logo" th:src="@{/assets/images/abstergo-industries-logo.png}" />
+						<label class="content">Abstergo</label>
+					</h2>
+					<h3 class="ui center aligned header">Private Files</h3>
+					<a class="ui vk button" th:href="@{/public}"><i class="archive icon"></i>Public files</a>
+					<div sec:authorize="isAuthenticated()" class="pull-right">
+						<form role="form" class="ui form" th:action="@{/logout}" method="post">
+							<button type="submit" class="ui primary button">Logout</button>
+						</form>
+					</div>
+					<div class="ui left aligned">
+						<span sec:authorize="isAuthenticated()">
+							<p>Hi, <b sec:authentication="name"></b></p>
+						</span>
+					</div>
+					<form enctype="multipart/form-data" th:action="@{/private/upload}" method="post">
+						<table>
+							<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+							<tr><td></td><td>
+								<button type="submit" class="ui button">
+									<i class="cloud icon"></i>Upload file
+								</button>
+							</td></tr>
+						</table>
+					</form>
+					<div class="ui section divider"></div>
+					<div>
+						<div th:if="${message}" class="ui info message">
+							<p th:text="${message}"></p>
+						</div>
+						<h3>Your Images</h3>
+						<ul>
+							<li th:each="file : ${images}">
+								<a th:href="@{/private/files/{fileName}(fileName=*{file.fileName})}" class="ui medium image">
+									<img th:src="@{/private/files/{fileName}(fileName=*{file.fileName})}" />
+								</a>
+							</li>
+						</ul>
+						<div class="ui section divider"></div>
+						<h3>Your Files</h3>
+						<ul>
+							<li th:each="file : ${files}">
+								<a th:href="@{/private/files/{fileName}(fileName=*{file.fileName})}" th:text="*{file.fileName}"></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script th:src="@{/assets/vendor/jquery-3.3.1.min.js}"></script>
+  	<script th:src="@{/assets/vendor/semantic/semantic.min.js}"></script>
+</body>
+</html>

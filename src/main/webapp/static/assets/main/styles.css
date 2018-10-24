@@ -1,0 +1,39 @@
+html,
+body,
+#root {
+  margin: 0;
+  height: 100% !important;
+}
+
+.login-layout {
+	background-image: url(/assets/images/login-bg.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+div.pull-right {
+	width: 7em;
+	margin-left: auto;
+}
+
+.login-form-exceptions {
+	height: 3em;
+}
+
+div.bottom-space-4 {
+	margin-bottom: 4em;
+}
+
+div.bottom-space-5 {
+	margin-bottom: 5em;
+}
+
+div.bottom-space-6 {
+	margin-bottom: 6em;
+}
+
+.last-bottom {
+	position: absolute;
+	bottom: 0.8em;
+	right: 1.3em;
+}

@@ -27,6 +27,7 @@ target/
 .project
 .springBeans
 .classpath
+.factorypath
 
 # dbeaver
 .dbeaver-data-sources.xml

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="author" content="Hendra Tommy Wijaya">
+<meta name="company" content="SA">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="System and Application Authorization Server">
+<title>Login - BizFlow</title>
+<link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/images/favicon.ico}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/vendor/semantic/semantic.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/main/styles.css}">
+
+<style type="text/css">
+	.grid {
+      height: 100%;
+    }
+    .column {
+      max-width: 30em;
+    }
+</style>
+
+<script>
+function validateForm() {
+	var isValid = true;
+	
+	if (!$("#username").val()) {
+		$("#usernameField").addClass("error");
+		isValid = false;
+	}
+	else $("#usernameField").removeClass("error");
+	
+	if (!$("#password").val()) {
+		$("#passwdField").addClass("error");
+		isValid = false;
+	}
+	else $("#passwdField").removeClass("error");
+	if (!isValid) {
+		if ($("#errorText").length) $("#errorText").html("Username and password cannot be empty");
+		else $("#formExceptions").append("<div id='errorText' class='ui red basic label'>Username and password cannot be empty</div>");
+	}
+	
+	return isValid;
+}
+</script>
+</head>
+<body>
+	<noscript>You need to enable JavaScript to run this app.</noscript>
+	<div id="root">
+		<div class="ui root middle aligned center aligned grid container">
+			<div class="column">
+				<form role="form" class="ui form column" onsubmit="return validateForm()" th:action="@{/login}" th:object="${loginForm}" method="post">
+					<div class="ui segment">
+						<h2 class="ui center aligned header">
+							<img class="image" alt="logo" th:src="@{/assets/images/abstergo-industries-logo.png}" />
+							<label class="content">Abstergo</label>
+						</h2>
+						<div id="formExceptions" class="login-form-exceptions">
+							<div id="errorText" class="ui red basic label" th:if="${exception != null}" th:text="#{${exception}}"></div>
+						</div>
+						
+						<div id="usernameField" class="field">
+							<div class="ui left icon input">
+								<i class="user icon"></i>
+								<input type="text" th:field="*{username}" placeholder="User ID" />
+							</div>
+						</div>
+						<div id="passwdField" class="field">
+							<div class="ui left icon input fluid">
+								<i class="lock icon"></i>
+								<input type="password" th:field="*{password}" placeholder="Password" />
+							</div>
+						</div>
+						<div class="pull-right bottom-space-6">
+							<button type="submit" class="ui blue button">Sign in</button>
+							<a class="ui vk button last-bottom" th:href="@{/public}"><i class="archive icon"></i>Public files</a>
+						</div>
+					</div>
+					<div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+					    <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>    
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<script th:src="@{/assets/vendor/jquery-3.3.1.min.js}"></script>
+  	<script th:src="@{/assets/vendor/semantic/semantic.min.js}"></script>
+</body>
+</html>
