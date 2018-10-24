@@ -47,6 +47,18 @@ public class Application implements CommandLineRunner {
 					systemService.install();
 					logger.info("Install complete");
 				}
+				else if (arg.equals("--test")) {
+					logger.info("Starting test");
+					
+					List<GrantedAuthority> authorities = new ArrayList<>();
+					authorities.add(new SimpleGrantedAuthority("ROLE_SYSTEM"));
+					
+					Authentication authentication =  new UsernamePasswordAuthenticationToken("SYSTEM", null, authorities);
+					SecurityContextHolder.getContext().setAuthentication(authentication);
+					
+					systemService.stepOne();
+					logger.info("Test complete");
+				}
 	        }
 		}
 	}

@@ -143,4 +143,29 @@ public class SystemService {
 		apiClient.addApiPermission(actuatorPermission);
 		clientRepository.save(apiClient);
 	}
+	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=SystemServiceInstallException.class)
+	public void stepOne() throws Exception {
+		ApiClient apiClient = new ApiClient();
+		apiClient.setUsername("stepOne");
+		apiClient.setPassword(passwordEncoder.encode("stepOne"));
+		apiClient.setEnabled(true);
+		apiClient.setLocked(false);
+		clientRepository.save(apiClient);
+		
+		stepTwo();
+		
+		// throw new NoRollbackException("Won't rollback");
+		throw new SystemServiceInstallException("Will rollback");
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	public void stepTwo() {
+		ApiClient apiClient = new ApiClient();
+		apiClient.setUsername("stepTwo");
+		apiClient.setPassword(passwordEncoder.encode("stepTwo"));
+		apiClient.setEnabled(true);
+		apiClient.setLocked(false);
+		clientRepository.save(apiClient);
+	}
 }
